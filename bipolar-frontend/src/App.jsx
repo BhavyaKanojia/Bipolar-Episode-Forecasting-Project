@@ -7,6 +7,7 @@ import MoodLogs from "./components/MoodLogs";
 import ForecastExplorer from "./components/ForecastExplorer";
 import Settings from "./components/Settings";
 import ChatArea from "./components/ChatArea";
+import Welcome from "./components/Welcome";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -34,18 +35,24 @@ const App = () => {
         {/* Full screen login intercept */}
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login onLogin={handleLogin} />} />
         
+        <Route path="/welcome" element={user ? <Navigate to="/" /> : <Welcome />} />
+        
         {/* Main Application Shell Access */}
         <Route path="/*" element={
-          <Layout user={user} onLogout={handleLogout}>
-            <Routes>
-              <Route path="/" element={<Dashboard user={user} />} />
-              <Route path="/mood-logs" element={<MoodLogs user={user} />} />
-              <Route path="/forecast" element={<ForecastExplorer user={user} />} />
-              <Route path="/chat" element={<ChatArea user={user} />} />
-              <Route path="/settings" element={<Settings onLogout={handleLogout} />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </Layout>
+          user ? (
+            <Layout user={user} onLogout={handleLogout}>
+              <Routes>
+                <Route path="/" element={<Dashboard user={user} />} />
+                <Route path="/mood-logs" element={<MoodLogs user={user} />} />
+                <Route path="/forecast" element={<ForecastExplorer user={user} />} />
+                <Route path="/chat" element={<ChatArea user={user} />} />
+                <Route path="/settings" element={<Settings onLogout={handleLogout} user={user} onUpdateUser={handleLogin} />} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </Layout>
+          ) : (
+            <Navigate to="/welcome" />
+          )
         } />
       </Routes>
     </BrowserRouter>

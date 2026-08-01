@@ -15,12 +15,24 @@ const Toggle = ({ checked, onChange }) => (
   </button>
 );
 
-const Settings = () => {
-  const [name, setName] = useState("User");
-  const [email, setEmail] = useState("user@example.com");
+const Settings = ({ user, onUpdateUser }) => {
+  const [name, setName] = useState(user?.username || "");
+  const [email, setEmail] = useState(user?.email || "");
   const [notifications, setNotifications] = useState(true);
   const [dailyReminder, setDailyReminder] = useState(true);
   const [weeklyReport, setWeeklyReport] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = () => {
+    setIsSaving(true);
+    setTimeout(() => {
+      if (onUpdateUser) {
+        onUpdateUser({ ...user, username: name, email: email });
+      }
+      setIsSaving(false);
+      alert("Settings saved successfully!");
+    }, 600);
+  };
 
   const inputStyle = {
     width: "100%", backgroundColor: "#f3f4f6", borderRadius: "12px", padding: "10px 16px",
@@ -97,12 +109,16 @@ const Settings = () => {
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button style={{
-            background: "linear-gradient(135deg, #8b5cf6, #a855f7)", color: "white",
-            borderRadius: "12px", padding: "10px 24px", fontSize: "14px", fontWeight: 500,
-            border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px"
-          }}>
-            <Save size={16} /> Save Changes
+          <button 
+            onClick={handleSave}
+            disabled={isSaving}
+            style={{
+              background: "linear-gradient(135deg, #8b5cf6, #a855f7)", color: "white",
+              borderRadius: "12px", padding: "10px 24px", fontSize: "14px", fontWeight: 500,
+              border: "none", cursor: isSaving ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: "8px",
+              opacity: isSaving ? 0.7 : 1
+            }}>
+            <Save size={16} /> {isSaving ? "Saving..." : "Save Changes"}
           </button>
         </motion.div>
       </div>

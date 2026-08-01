@@ -135,9 +135,16 @@ def dashboard():
         latest_log = db.logs.find_one(query, sort=[("date", -1)])
         
         sleep_hours = latest_log["sleep"] if latest_log else 7.0
+        mood_val = latest_log.get("mood", 1) if latest_log else 1
+        energy_val = latest_log.get("energy", 5) if latest_log else 5
         
         input_data = {
-            "Sleep": sleep_hours,
+            "Sadness": "Usually" if mood_val == 0 else ("Sometimes" if mood_val == 1 else "Seldom"),
+            "Euphoric": "Usually" if mood_val == 2 else ("Sometimes" if mood_val == 1 else "Seldom"),
+            "Exhausted": "Usually" if energy_val < 4 else ("Sometimes" if energy_val < 7 else "Seldom"),
+            "Sleep dissorder": "Usually" if (sleep_hours < 5 or sleep_hours > 9) else "Seldom",
+            "Mood Swing": "YES" if (mood_val == 0 or mood_val == 2) else "NO",
+            "Optimisim": energy_val
         }
         
         input_df = pd.DataFrame([input_data])
@@ -209,10 +216,12 @@ def forecast():
         sleep_val = l.get("sleep", 7.0)
         
         input_data = {
-            "Sadness": 1 if mood_val == 0 else 0,
-            "Euphoric": 1 if mood_val == 2 else 0,
-            "Exhausted": 1 if energy_val < 4 else 0,
-            "Sleep dissorder": 1 if (sleep_val < 5 or sleep_val > 9) else 0,
+            "Sadness": "Usually" if mood_val == 0 else ("Sometimes" if mood_val == 1 else "Seldom"),
+            "Euphoric": "Usually" if mood_val == 2 else ("Sometimes" if mood_val == 1 else "Seldom"),
+            "Exhausted": "Usually" if energy_val < 4 else ("Sometimes" if energy_val < 7 else "Seldom"),
+            "Sleep dissorder": "Usually" if (sleep_val < 5 or sleep_val > 9) else "Seldom",
+            "Mood Swing": "YES" if (mood_val == 0 or mood_val == 2) else "NO",
+            "Optimisim": energy_val
         }
         
         input_df = pd.DataFrame([input_data])
