@@ -121,11 +121,11 @@ const Dashboard = ({ user }) => {
             <StatCard title="Depression Risk" value={`${data.depression_risk}%`} gradient={gradients.green} delay={0.3} icon={<HeartPulse size={20} />} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "24px", flexWrap: "wrap" }}>
-            <div style={{ minWidth: "300px" }}>
+          <div className="dashboard-main-grid">
+            <div style={{ minWidth: 0, width: "100%" }}>
               <MoodChart data={data.chart_data || []} />
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px", minWidth: "250px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "24px", minWidth: 0 }}>
               <InfoCard title="Sleep Quality (Latest)" value={`${data.sleep_quality} hrs`} color="#14b8a6" delay={0.4} icon={<Moon size={16} />} />
               <InfoCard title="Next Episode Risk" value={data.next_episode_risk} color="#14b8a6" delay={0.5} icon={<Zap size={16} />} />
               <motion.div
