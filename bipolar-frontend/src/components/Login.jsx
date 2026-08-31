@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lock, User, Brain, ArrowRight, UserPlus } from "lucide-react";
+import { API_BASE_URL } from "../config";
 
 export default function Login({ onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -19,7 +20,7 @@ export default function Login({ onLogin }) {
     const endpoint = isLogin ? "/api/login" : "/api/register";
 
     try {
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

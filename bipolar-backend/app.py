@@ -24,8 +24,9 @@ db = client['bipolar_db']
 # -----------------------------
 # Load Trained Model & Encoder
 # -----------------------------
-model = pickle.load(open("model.pkl", "rb"))
-label_encoder = pickle.load(open("label_encoder.pkl", "rb"))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model = pickle.load(open(os.path.join(BASE_DIR, "model.pkl"), "rb"))
+label_encoder = pickle.load(open(os.path.join(BASE_DIR, "label_encoder.pkl"), "rb"))
 
 # -----------------------------
 # Predict Route
@@ -290,4 +291,5 @@ def forecast():
 # Run Server
 # -----------------------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)

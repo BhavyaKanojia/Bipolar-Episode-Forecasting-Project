@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Shield, AlertTriangle, HeartPulse, Moon, Zap, Loader } from "lucide-react";
 import MoodChart from "./Moodchart";
+import { API_BASE_URL } from "../config";
 
 const gradients = {
   purple: "linear-gradient(135deg, #8b5cf6, #a855f7)",
@@ -53,7 +54,7 @@ const Dashboard = ({ user }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let url = "http://localhost:5000/api/dashboard";
+    let url = `${API_BASE_URL}/api/dashboard`;
     if (user && user.user_id) url += `?user_id=${user.user_id}`;
     fetch(url)
       .then(res => res.json())

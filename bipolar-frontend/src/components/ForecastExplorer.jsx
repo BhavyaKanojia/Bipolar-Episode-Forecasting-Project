@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { TrendingUp, AlertTriangle, Shield, Calendar, Loader } from "lucide-react";
+import { API_BASE_URL } from "../config";
 
 const cards = [
   { title: "7-Day Outlook", value: "Stable", icon: Shield, gradient: "linear-gradient(135deg, #10b981, #14b8a6)" },
@@ -18,7 +19,7 @@ const ForecastExplorer = ({ user }) => {
   const [daysLogged, setDaysLogged] = useState(0);
 
   useEffect(() => {
-    let url = "http://localhost:5000/api/forecast";
+    let url = `${API_BASE_URL}/api/forecast`;
     if (user && user.user_id) url += `?user_id=${user.user_id}`;
     fetch(url)
       .then(res => res.json())

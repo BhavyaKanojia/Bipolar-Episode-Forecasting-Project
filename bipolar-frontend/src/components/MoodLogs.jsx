@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Smile, Meh, Frown, Zap, Moon } from "lucide-react";
+import { API_BASE_URL } from "../config";
 
 const moodIcons = [Frown, Meh, Smile];
 const moodLabels = ["Low", "Neutral", "Good"];
@@ -22,7 +23,7 @@ const MoodLogs = ({ user }) => {
 
   const fetchLogs = async () => {
     try {
-      let url = "http://localhost:5000/api/logs";
+      let url = `${API_BASE_URL}/api/logs`;
       if (user && user.user_id) url += `?user_id=${user.user_id}`;
       const res = await fetch(url);
       const data = await res.json();
@@ -49,7 +50,7 @@ const MoodLogs = ({ user }) => {
     };
 
     try {
-      await fetch("http://localhost:5000/api/logs", {
+      await fetch(`${API_BASE_URL}/api/logs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
