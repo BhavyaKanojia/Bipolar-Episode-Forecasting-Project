@@ -7,9 +7,10 @@ db = None
 def init_db():
     global client, db
     if db is None:
-        client = MongoClient(Config.MONGO_URI)
+        client = MongoClient(Config.MONGO_URI, serverSelectionTimeoutMS=2000)
         db = client['bipolar_db']
     return db
+
 
 def get_db():
     global db

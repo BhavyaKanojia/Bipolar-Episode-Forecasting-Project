@@ -9,6 +9,7 @@ from routes.logs_routes import logs_bp
 from routes.dashboard_routes import dashboard_bp
 from routes.forecast_routes import forecast_bp
 from routes.predict_routes import predict_bp
+from routes.ai_routes import ai_bp
 
 def create_app():
     app = Flask(__name__)
@@ -23,6 +24,7 @@ def create_app():
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(forecast_bp)
     app.register_blueprint(predict_bp)
+    app.register_blueprint(ai_bp)
 
     @app.route("/")
     def health():

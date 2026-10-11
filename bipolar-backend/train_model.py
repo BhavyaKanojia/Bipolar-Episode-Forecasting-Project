@@ -17,7 +17,8 @@ print("Shape:", df.shape)
 df = df.drop("Patient Number", axis=1)
 
 # 🔹 Clean Optimisim column (convert "4 From 10" → 4)
-df["Optimisim"] = df["Optimisim"].str.extract('(\d+)').astype(int)
+df["Optimisim"] = df["Optimisim"].str.extract(r'(\d+)').astype(int)
+
 
 # 🔹 Separate features and target
 X = df.drop("Expert Diagnose", axis=1)
